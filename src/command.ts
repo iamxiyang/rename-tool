@@ -11,7 +11,7 @@ export default async () => {
   updateNotifier({ pkg }).notify()
 
   program
-    .name('rename-cli or rename')
+    .name('rename-tool or rename')
     .usage('<input> <output>')
     .version(pkg.version)
 
@@ -29,7 +29,7 @@ export default async () => {
     console.log(`${cyan('$ ')}rename --config ./renameconfig.json`)
     console.log('')
     console.log(cyan('首次使用推荐查看文档:'))
-    console.log(`https://github.com/iamxiyang/rename-cli#readme`)
+    console.log(`https://github.com/iamxiyang/rename-tool#readme`)
     console.log('')
   })
 

@@ -1,5 +1,5 @@
 {
-  "name": "rename-cli",
+  "name": "rename-tool",
   "version": "0.0.1.beta-1",
   "description": "一个批量重命名的命令行工具",
   "author": "何喜阳",
@@ -7,7 +7,7 @@
   "type": "module",
   "bin": {
     "rename": "./bin/rename.mjs",
-    "rename-cli": "./bin/rename.mjs"
+    "rename-tool": "./bin/rename.mjs"
   },
   "scripts": {
     "build": "unbuild",
@@ -26,7 +26,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/iamxiyang/rename-cli.git"
+    "url": "git+https://github.com/iamxiyang/rename-tool.git"
   },
   "engines": {
     "node": ">=14.0.0"
@@ -35,9 +35,9 @@
     "dist"
   ],
   "bugs": {
-    "url": "https://github.com/iamxiyang/rename-cli/issues"
+    "url": "https://github.com/iamxiyang/rename-tool/issues"
   },
-  "homepage": "https://github.com/iamxiyang/rename-cli#readme",
+  "homepage": "https://github.com/iamxiyang/rename-tool#readme",
   "dependencies": {
     "colorette": "^2.0.19",
     "commander": "^9.3.0",
