@@ -1,4 +1,4 @@
-import FastGlob from "fast-glob"
+import FastGlob from 'fast-glob'
 
 export interface Input {
   glob: string
