@@ -2,8 +2,20 @@ import { parse } from 'pathe'
 import { getPinyin, md5File, sha256File } from './utils'
 import { Output } from './types'
 
-// 计算各个变量需要返回的新名字
-const dirIndex: { [path: string]: number } = {}
+// 记录目录的序号
+const dirI: { [path: string]: number } = {}
+
+const filter = (name: string, action: string[]): string => {
+  let str = name
+  action.forEach((item) => {
+    const args = /\((\S+?)\)/.exec(item)?.[1]?.split(',')
+    if (item.startsWith('replace') && args && args?.length >= 2) {
+      // {name|replace(1,2)} 把1替换成2
+      str = str.replace(args[0], args[1])
+    }
+  })
+  return str
+}
 
 export default async (path: string, output: Output) => {
   if (!path) return ''
@@ -11,70 +23,59 @@ export default async (path: string, output: Output) => {
   if (output.mapping && output.mapping[name]) {
     return output.mapping[name]
   }
-  // 如果包含md5、sha1 等异步操作，提前计算，replace不支持await
+  // 如果包含md5、sha1 等异步操作，提前计算，replace 中不支持await
   let md5 = ''
-  if (output.filename.includes('{md5}')) {
+  if (output.filename.includes('md5')) {
     md5 = await md5File(path)
   }
   let sha256 = ''
-  if (output.filename.includes('{sha256}')) {
+  if (output.filename.includes('sha256')) {
     sha256 = await sha256File(path)
   }
 
-  let _name = output.filename || name
-  // if (_name.startsWith('{replace') && _name.endsWith('}')) {
-  //   // 支持有限的简单字符替换，需要用引号包裹变量，如 "{replace name=a \"jjj = 有点意思 }"
-  //   // TODO 暂不支持，后续通过命令行额外参数实现
-  //   return dir
-  // }
-  _name = _name.replace(/({\S+?})/g, (match, p1) => {
-    console.log(2, _name, match, p1)
-    switch (p1) {
-      case '{pinyin}':
-        return getPinyin(name)
-      case '{szm}':
-        return getPinyin(name, { pattern: 'first' })
-      // case '{english}':
-      //   // TODO 后续考虑支持
-      //   return name
-      case '{ext}':
-        return ext
-      case '{md5}':
-        return md5
-      case '{sha256}':
-        return sha256
-      case '{index}':
-        if (!dirIndex[dir]) {
-          dirIndex[dir] = 1
+  let filename = output.filename || name
+  filename = filename.replace(/{(\S+?)}/g, (match, p1) => {
+    const actions = p1.split('|')
+    const variable = actions.shift()
+    let _str: string = p1
+    switch (variable) {
+      case 'pinyin':
+        _str = getPinyin(p1)
+        break
+      case 'szm':
+        _str = getPinyin(p1, { pattern: 'first' })
+        break
+      case 'md5':
+        _str = md5
+        break
+      case 'sha256':
+        _str = sha256
+        break
+      case 'i':
+        if (!dirI[dir]) {
+          // {i|起始值}
+          const de = actions.shift()
+          dirI[dir] = isNaN(Number(de)) ? 1 : Number(de) | 1
         } else {
-          dirIndex[dir]++
+          dirI[dir]++
         }
-        return dirIndex[dir] - 1
-      case '{name}':
-        // 原文件名，不带后缀
-        return name
-      case '{filename}':
-        return name + ext
-      // case '{year}':
-      //   // TODO 是文件的年月日还是当前的年月日待定
-      //   return name
-      // case '{month}':
-      //   return name
-      // case '{day}':
-      //   return name
-      // case '{hour}':
-      //   return name
-      // case '{minute}':
-      //   return name
-      // case '{second}':
-      //   return name
-      // case '{timestamp}':
-      //   return name
-      default:
-        return p1
+        _str = String(dirI[dir])
+        break
+      case 'name':
+        _str = name
+        break
+      case 'ext':
+        _str = ext
+        break
+      case 'filename':
+        _str = name + ext
+        break
     }
+    if (actions.length) {
+      _str = filter(_str, actions)
+    }
+    return _str
   })
 
-  // 输出允许配置变量 {pinyin} {szm}(首字母) {english} {md5} {sha1} {index}(当前目录序号) {name}(原文件名，用于追加内容) {ext}(后缀)  {filename}(源文件名，带后缀) {year}{month}{day}{hour}{minute}{second} {timestamp} {replace('a','b')}  {aindex} {Aindex}
-  return _name
+  return filename
 }
