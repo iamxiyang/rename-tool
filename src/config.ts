@@ -10,7 +10,7 @@ const defaultConfig: Config = {
     'fast-glob': {},
   },
   output: {
-    // 保存到什么目录
+    // 保存到什么目录，TODO 暂不支持
     path: './',
     // 文件默认规则
     filename: '{pinyin}.{ext}',
