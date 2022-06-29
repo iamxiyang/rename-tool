@@ -40,10 +40,10 @@ export default async (path: string, output: Output) => {
     let _str: string = p1
     switch (variable) {
       case 'pinyin':
-        _str = getPinyin(p1)
+        _str = getPinyin(name)
         break
       case 'szm':
-        _str = getPinyin(p1, { pattern: 'first' })
+        _str = getPinyin(name, { pattern: 'first' })
         break
       case 'md5':
         _str = md5
