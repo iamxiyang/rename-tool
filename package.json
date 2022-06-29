@@ -11,7 +11,7 @@
   },
   "scripts": {
     "build": "unbuild",
-    "build:stub": "unbuild --stub",
+    "dev": "unbuild --stub",
     "lint": "eslint --ext .ts src/",
     "prepare": "husky install",
     "release": "bumpp --commit --push --tag"
