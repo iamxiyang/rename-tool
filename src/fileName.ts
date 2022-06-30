@@ -6,7 +6,7 @@ import { Output } from './types'
 const dirI: { [path: string]: number } = {}
 
 const filter = (name: string, action: string[]): string => {
-  let str = name  
+  let str = name
   action.forEach((item) => {
     const args = /\((\S+?)\)/.exec(item)?.[1]?.split(',')
     if (item.startsWith('replace') && args && args?.length >= 2) {
