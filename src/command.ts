@@ -2,6 +2,7 @@ import { Command } from 'commander'
 import updateNotifier from 'update-notifier'
 import { cyan } from 'colorette'
 import pkg from '../package.json'
+import renameconfig from '../renameconfig.json'
 import inquirer from 'inquirer'
 import open from 'open'
 
@@ -39,15 +40,8 @@ export default async () => {
 
   const options = program.opts()
 
-  const input = {
-    glob: '**',
-    'fast-glob': {},
-  }
-  const output = {
-    path: './',
-    filename: '{pinyin}',
-    mapping: {},
-  }
+  const input = { ...renameconfig.input }
+  const output = { ...renameconfig.output }
 
   if (program.args.length === 0) {
     // 交互式选择

@@ -2,13 +2,13 @@ import FastGlob from 'fast-glob'
 
 export interface Input {
   glob: string
-  'fast-glob': FastGlob.Options
+  'fast-glob'?: FastGlob.Options
 }
 
 export interface Output {
-  path: string
+  path?: string
   filename: string
-  mapping: {
+  mapping?: {
     [key: string]: string
   }
 }

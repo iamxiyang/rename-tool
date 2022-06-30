@@ -16,7 +16,7 @@ export default async (input: Input, configPath: string | boolean = '') => {
   if (configPath && typeof configPath === 'string') {
     baseConfig['ignore']?.push(configPath)
   }
-  const config = defu(baseConfig, input['fast-glob'])
+  const config = defu(baseConfig, input['fast-glob'] || {})
   const files = await fg(input.glob, config)
   return files
 }
