@@ -6,7 +6,7 @@ import { Output } from './types'
 const dirI: { [path: string]: number } = {}
 
 const filter = (name: string, action: string[]): string => {
-  let str = name
+  let str = name  
   action.forEach((item) => {
     const args = /\((\S+?)\)/.exec(item)?.[1]?.split(',')
     if (item.startsWith('replace') && args && args?.length >= 2) {
@@ -55,7 +55,7 @@ export default async (path: string, output: Output) => {
         if (!dirI[dir]) {
           // {i|起始值}
           const de = actions.shift()
-          dirI[dir] = isNaN(Number(de)) ? 1 : Number(de) | 1
+          dirI[dir] = isNaN(Number(de)) ? 1 : Number(de) || 1
         } else {
           dirI[dir]++
         }
