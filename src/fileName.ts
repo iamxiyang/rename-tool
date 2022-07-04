@@ -1,6 +1,7 @@
 import { parse } from 'pathe'
 import { getPinyin, md5File, sha256File } from './utils'
 import { Output } from './types'
+import dayjs from 'dayjs'
 
 // 记录目录的序号
 const dirI: { [path: string]: number } = {}
@@ -12,6 +13,9 @@ const filter = (name: string, action: string[]): string => {
     if (item.startsWith('replace') && args && args?.length >= 2) {
       // {name|replace(1,2)} 把1替换成2
       str = str.replace(args[0], args[1])
+    } else if (item.startsWith('format') && args) {
+      // {date|format(YYYY-MM-DD)} 把日期格式化成YYYY-MM-DD
+      str = dayjs(str).format(args[0])
     }
   })
   return str
@@ -69,6 +73,13 @@ export default async (path: string, output: Output) => {
         break
       case 'filename':
         _str = name + ext
+        break
+      case 'date':
+        if (!actions.length) {
+          _str = dayjs().format('YYYY-MM-DD')
+        } else {
+          _str = new Date().toISOString()
+        }
         break
     }
     if (actions.length) {

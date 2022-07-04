@@ -11,6 +11,7 @@ specifiers:
   colorette: ^2.0.19
   commander: ^9.3.0
   crypto: ^1.0.1
+  dayjs: ^1.11.3
   defu: ^6.0.0
   eslint: ^8.17.0
   eslint-config-prettier: ^8.5.0
@@ -35,6 +36,7 @@ dependencies:
   colorette: 2.0.19
   commander: 9.3.0
   crypto: 1.0.1
+  dayjs: 1.11.3
   defu: 6.0.0
   fast-glob: 3.2.11
   fs-extra: 10.1.0
@@ -1173,6 +1175,10 @@ packages:
   /crypto/1.0.1:
     resolution: {integrity: sha512-VxBKmeNcqQdiUQUW2Tzq0t377b54N2bMtXO/qiLa+6eRRmmC4qT3D4OnTGoT/U6O9aklQ/jTwbOtRMTTY8G0Ig==}
     deprecated: This package is no longer supported. It's now a built-in Node module. If you've depended on crypto, you should switch to the one that's built-in.
+    dev: false
+
+  /dayjs/1.11.3:
+    resolution: {integrity: sha512-xxwlswWOlGhzgQ4TKzASQkUhqERI3egRNqgV4ScR8wlANA/A9tZ7miXa44vTTKEq5l7vWoL5G57bG3zA+Kow0A==}
     dev: false
 
   /debug/2.6.9:

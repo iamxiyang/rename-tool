@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import { describe, expect, it } from 'vitest'
 import getFileName from '../src/fileName'
 
@@ -132,6 +133,22 @@ describe('fileName', () => {
         path: './',
       })
     ).toEqual('哈哈哈.png-test')
+  })
+  it('{date}', async () => {
+    expect(
+      await getFileName('哈哈哈.png', {
+        filename: '{date}',
+        mapping: {},
+        path: './',
+      })
+    ).toEqual(dayjs().format('YYYY-MM-DD'))
+    expect(
+      await getFileName('哈哈哈.png', {
+        filename: '{date|format(HH)}',
+        mapping: {},
+        path: './',
+      })
+    ).toEqual(dayjs().format('HH'))
   })
   it('混用', async () => {
     expect(
