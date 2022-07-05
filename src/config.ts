@@ -1,23 +1,31 @@
 import { red } from 'colorette'
 import defu from 'defu'
 import fse from 'fs-extra'
-import { Options } from './types'
+import { Config } from './types'
 
-export default (options: Options) => {
-  let fileConfig = {}
-  if (options.config === true) {
-    options.config = './renameconfig.json'
-  } else if (typeof options.config === 'string') {
-    options.config = options.config
+export default (
+  inputGlob: string,
+  outputName: string,
+  config: string | boolean
+) => {
+  let fileConfig: Partial<Config> = {}
+  let configPath = config && './renameconfig.json'
+  if (config && typeof config === 'string') {
+    configPath = config
   }
-
-  if (options.config) {
+  if (configPath) {
     try {
-      fileConfig = fse.readJSONSync(options.config)
+      fileConfig = fse.readJSONSync(configPath)
     } catch (err) {
       console.error(red('读取配置文件出错' + err))
     }
   }
-  const result = defu(options, fileConfig)
-  return result
+  const result = defu(
+    {
+      input: { glob: inputGlob || fileConfig?.input?.glob || '**' },
+      output: { filename: outputName || fileConfig?.output?.filename },
+    },
+    fileConfig
+  ) as Config
+  return { ...result, configPath }
 }

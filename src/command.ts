@@ -2,7 +2,6 @@ import { Command } from 'commander'
 import updateNotifier from 'update-notifier'
 import { cyan } from 'colorette'
 import pkg from '../package.json'
-import renameconfig from '../renameconfig.json'
 import inquirer from 'inquirer'
 import open from 'open'
 
@@ -40,10 +39,10 @@ export default async () => {
 
   const options = program.opts()
 
-  const input = { ...renameconfig.input }
-  const output = { ...renameconfig.output }
+  let inputGlob
+  let outputName
 
-  if (program.args.length === 0) {
+  if (!options.config && program.args.length === 0) {
     // 交互式选择
     const question = await inquirer.prompt([
       {
@@ -59,11 +58,11 @@ export default async () => {
       },
     ])
     if (question['ask-rule'] === '当前目录下文件名改成拼音') {
-      input.glob = '**'
-      output.filename = '{pinyin}'
+      inputGlob = '**'
+      outputName = '{pinyin}'
     } else if (question['ask-rule'] === '当前目录下文件名改成首字母') {
-      input.glob = '**'
-      output.filename = '{szm}'
+      inputGlob = '**'
+      outputName = '{szm}'
     } else if (question['ask-rule'] === '打开帮助文档【第一次使用建议看下】') {
       console.log(cyan('正在打开'), pkg.homepage)
       console.log('看完文档可根据需要重新执行命令')
@@ -71,10 +70,10 @@ export default async () => {
       process.exit(1)
     }
   } else if (program.args.length === 1) {
-    output['filename'] = program.args[0]
+    outputName = program.args[0]
   } else if (program.args.length >= 2) {
-    input['glob'] = program.args[0]
-    output['filename'] = program.args[1]
+    inputGlob = program.args[0]
+    outputName = program.args[1]
   }
-  return { input, output, config: options.config }
+  return { inputGlob, outputName, config: options.config }
 }
