@@ -1,5 +1,5 @@
 import fse from 'fs-extra'
-import { parse, resolve } from 'pathe'
+import { parse, resolve, sep } from 'pathe'
 import { red } from 'colorette'
 import { Output } from './types'
 
@@ -7,8 +7,8 @@ import { Output } from './types'
 export default async (oldPath: string, name: string, output: Output) => {
   try {
     const { dir, ext } = parse(oldPath)
-    const newPath = resolve(dir, output.path + '', name + ext)
-    if (dir !== resolve(dir, output.path + '')) {
+    const newPath = resolve(dir, (output.path || './') + sep, name + ext)
+    if (dir !== resolve(dir, output.path + sep)) {
       fse.copySync(oldPath, newPath)
     } else {
       fse.renameSync(oldPath, newPath)

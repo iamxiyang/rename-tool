@@ -1,5 +1,4 @@
 import { red } from 'colorette'
-import defu from 'defu'
 import fse from 'fs-extra'
 import { Config } from './types'
 
@@ -20,12 +19,17 @@ export default (
       console.error(red('读取配置文件出错' + err))
     }
   }
-  const result = defu(
-    {
-      input: { glob: inputGlob || fileConfig?.input?.glob || '**' },
-      output: { filename: outputName || fileConfig?.output?.filename },
+  const result = {
+    input: {
+      glob: inputGlob || fileConfig?.input?.glob || '**',
+      'fast-glob': fileConfig?.input?.['fast-glob'] || {},
     },
-    fileConfig
-  ) as Config
+    output: {
+      filename: outputName || fileConfig?.output?.filename,
+      path: fileConfig?.output?.path || './',
+      mapping: fileConfig?.output?.mapping || {},
+    },
+  }
+
   return { ...result, configPath }
 }

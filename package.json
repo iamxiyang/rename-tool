@@ -44,7 +44,6 @@
     "commander": "^9.3.0",
     "crypto": "^1.0.1",
     "dayjs": "^1.11.3",
-    "defu": "^6.0.0",
     "fast-glob": "^3.2.11",
     "fs-extra": "^10.1.0",
     "inquirer": "^9.0.0",
