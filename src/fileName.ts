@@ -6,16 +6,23 @@ import dayjs from 'dayjs'
 // 记录目录的序号
 const dirI: { [path: string]: number } = {}
 
+const removeMarks = (str: string): string => {
+  if (['"', '`', "'"].includes(str[0]) && str[0] === str[str.length - 1]) {
+    return str.slice(1, -1)
+  }
+  return str
+}
+
 const filter = (name: string, action: string[]): string => {
   let str = name
   action.forEach((item) => {
     const args = /\((\S+?)\)/.exec(item)?.[1]?.split(',')
     if (item.startsWith('replace') && args && args?.length >= 2) {
       // {name|replace(1,2)} 把1替换成2
-      str = str.replace(args[0], args[1])
+      str = str.replaceAll(removeMarks(args[0]), removeMarks(args[1]))
     } else if (item.startsWith('format') && args) {
       // {date|format(YYYY-MM-DD)} 把日期格式化成YYYY-MM-DD
-      str = dayjs(str).format(args[0])
+      str = dayjs(str).format(removeMarks(args[0]))
     }
   })
   return str
@@ -82,6 +89,7 @@ export default async (path: string, output: Output) => {
         }
         break
     }
+
     if (actions.length) {
       _str = filter(_str, actions)
     }
