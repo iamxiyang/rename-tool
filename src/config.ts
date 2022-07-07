@@ -25,7 +25,7 @@ export default (
       'fast-glob': fileConfig?.input?.['fast-glob'] || {},
     },
     output: {
-      filename: outputName || fileConfig?.output?.filename,
+      filename: outputName || fileConfig?.output?.filename || '{name}',
       path: fileConfig?.output?.path || './',
       mapping: fileConfig?.output?.mapping || {},
     },

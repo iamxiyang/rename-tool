@@ -4,7 +4,7 @@ import findFiles from './findFiles'
 import getFileName from './fileName'
 import replaceFileName from './replaceName'
 import inquirer from 'inquirer'
-import { blue, gray, red, white } from 'colorette'
+import { gray, red, white } from 'colorette'
 import { parse } from 'pathe'
 
 const rename = async () => {
@@ -29,7 +29,9 @@ const rename = async () => {
     }
   }
 
-  console.log(`* 预计需要替换 ${filesNameMap.size} 个文件，为避免出现错误，请预览修改效果，确认后继续`)
+  console.log(
+    `* 预计需要替换 ${filesNameMap.size} 个文件，为避免出现错误，请预览修改效果，确认后继续`
+  )
   console.log(`原始路径 ---> 新路径`)
   for (const [oldPath, newPath] of [...filesNameMap].splice(0, 5)) {
     const { dir, ext } = parse(oldPath)
