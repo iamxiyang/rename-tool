@@ -8,7 +8,7 @@ export default (
   config: string | boolean
 ) => {
   let fileConfig: Partial<Config> = {}
-  let configPath = config && './renameconfig.json'
+  let configPath = config && './rename.config.json'
   if (config && typeof config === 'string') {
     configPath = config
   }

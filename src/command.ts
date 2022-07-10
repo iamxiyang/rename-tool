@@ -26,7 +26,7 @@ export default async () => {
     console.log(cyan('通过配置文件操作:'))
     console.log(`${cyan('$ ')}rename --config`)
     console.log(cyan('指定配置文件路径:'))
-    console.log(`${cyan('$ ')}rename --config ./renameconfig.json`)
+    console.log(`${cyan('$ ')}rename --config ./rename.config.json`)
     console.log('')
     console.log(cyan('首次使用推荐查看文档:'))
     console.log(`https://github.com/iamxiyang/rename-tool#readme`)
