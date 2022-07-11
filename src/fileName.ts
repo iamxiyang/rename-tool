@@ -63,10 +63,10 @@ export default async (path: string, output: Output) => {
         _str = sha256
         break
       case 'i':
-        if (!dirI[dir]) {
+        if (typeof dirI[dir] === 'undefined') {
           // {i|起始值}
           const de = actions.shift()
-          dirI[dir] = isNaN(Number(de)) ? 1 : Number(de) || 1
+          dirI[dir] = isNaN(Number(de)) ? 1 : Number(de) ?? 1
         } else {
           dirI[dir]++
         }
