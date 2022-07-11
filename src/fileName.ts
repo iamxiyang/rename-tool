@@ -23,6 +23,12 @@ const filter = (name: string, action: string[]): string => {
     } else if (item.startsWith('format') && args) {
       // {date|format(YYYY-MM-DD)} 把日期格式化成YYYY-MM-DD
       str = dayjs(str).format(removeMarks(args[0]))
+    } else if (item.startsWith('padStart') && args) {
+      // {i|padStart(3,0)} 如果位数不足2位，前面补充0
+      str = str.padStart(Number(args[0]), removeMarks(args[1]))
+    } else if (item.startsWith('padEnd') && args) {
+      // {name|padEnd(10,0)} 如果位数不足10位，后面补充0
+      str = str.padEnd(Number(args[0]), removeMarks(args[1]))
     }
   })
   return str

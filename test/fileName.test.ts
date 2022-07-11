@@ -58,6 +58,13 @@ describe('fileName', () => {
         path: './',
       })
     ).toEqual('102hh')
+    expect(
+      await getFileName('哈哈哈.png', {
+        filename: '{i|padStart(5,0)}',
+        mapping: {},
+        path: './',
+      })
+    ).toEqual('00103')
   })
   it('{md5}', async () => {
     expect(
@@ -101,6 +108,20 @@ describe('fileName', () => {
         path: './',
       })
     ).toEqual('您好')
+    expect(
+      await getFileName('你好.png', {
+        filename: '{name|replace(你,您)|padEnd(5,哟)}',
+        mapping: {},
+        path: './',
+      })
+    ).toEqual('您好哟哟哟')
+    expect(
+      await getFileName('你好.png', {
+        filename: '{name|padEnd(5,.)}',
+        mapping: {},
+        path: './',
+      })
+    ).toEqual('你好...')
   })
   it('{ext}', async () => {
     expect(
