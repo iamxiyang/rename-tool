@@ -1,6 +1,6 @@
 {
   "name": "rename-tool",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "一个批量重命名的命令行工具",
   "author": "何喜阳",
   "license": "MIT",
