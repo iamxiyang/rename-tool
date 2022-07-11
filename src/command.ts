@@ -8,7 +8,7 @@ import open from 'open'
 const program = new Command()
 
 export default async () => {
-  updateNotifier({ pkg }).notify()
+  updateNotifier({ pkg }).notify({ isGlobal: true })
 
   program
     .name('rename-tool or rename')
