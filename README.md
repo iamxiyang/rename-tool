@@ -2,6 +2,13 @@
 
 批量重命名工具，用来基于特定规则批量对文件进行重命名。
 
+<div>
+  <img src="https://img.shields.io/npm/v/rename-tool" alt="version">
+  <img src="https://img.shields.io/github/stars/iamxiyang/rename-tool" alt="stars">
+  <img src="https://img.shields.io/github/issues/iamxiyang/rename-tool" alt="issues">
+  <img src="https://img.shields.io/npm/l/rename-tool" alt="licence">
+</div>
+
 ## 特点
 
 - 可以通过配置文件简化常用操作
@@ -13,12 +20,12 @@
 ## 安装
 
 ```shell
+# pnpm
+pnpm add rename-tool -g
 # npm
 npm i rename-tool -g
 # yarn 
 yarn add rename-tool global
-# pnpm
-pnpm install rename-tool -g
 ```
 
 ## 使用
